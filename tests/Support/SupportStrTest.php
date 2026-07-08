@@ -324,6 +324,62 @@ class SupportStrTest extends TestCase
         $this->assertTrue(Str::doesntEndWith('你好', 'a'));
     }
 
+    public function testStartsWithIgnoreCase()
+    {
+        $this->assertTrue(Str::startsWith('jason', 'JAS', true));
+        $this->assertTrue(Str::startsWith('JASON', 'jas', true));
+        $this->assertTrue(Str::startsWith('jason', ['DAY', 'JAS'], true));
+        $this->assertTrue(Str::startsWith('jason', collect(['DAY', 'JAS']), true));
+        $this->assertFalse(Str::startsWith('jason', 'day', true));
+        $this->assertFalse(Str::startsWith('jason', ['day'], true));
+        $this->assertFalse(Str::startsWith('jason', '', true));
+        $this->assertFalse(Str::startsWith('', '', true));
+        $this->assertFalse(Str::startsWith('jason', 'J', false));
+        // Test for multibyte string support
+        $this->assertTrue(Str::startsWith('JÖNKÖPING', 'jö', true));
+        $this->assertTrue(Str::startsWith('jö', 'JÖ', true));
+        $this->assertFalse(Str::startsWith('Jönköping', 'Jonko', true));
+    }
+
+    public function testEndsWithIgnoreCase()
+    {
+        $this->assertTrue(Str::endsWith('jason', 'ON', true));
+        $this->assertTrue(Str::endsWith('JASON', 'on', true));
+        $this->assertTrue(Str::endsWith('jason', ['NO', 'ON'], true));
+        $this->assertTrue(Str::endsWith('jason', collect(['NO', 'ON']), true));
+        $this->assertFalse(Str::endsWith('jason', 'no', true));
+        $this->assertFalse(Str::endsWith('jason', ['no'], true));
+        $this->assertFalse(Str::endsWith('jason', '', true));
+        $this->assertFalse(Str::endsWith('', '', true));
+        $this->assertFalse(Str::endsWith('jason', 'N', false));
+        // Test for multibyte string support
+        $this->assertTrue(Str::endsWith('JÖNKÖPING', 'öping', true));
+        $this->assertTrue(Str::endsWith('jöping', 'ÖPING', true));
+        $this->assertFalse(Str::endsWith('Jönköping', 'oping', true));
+    }
+
+    public function testDoesntStartWithIgnoreCase()
+    {
+        $this->assertFalse(Str::doesntStartWith('jason', 'JAS', true));
+        $this->assertFalse(Str::doesntStartWith('JASON', 'jas', true));
+        $this->assertFalse(Str::doesntStartWith('jason', ['DAY', 'JAS'], true));
+        $this->assertTrue(Str::doesntStartWith('jason', 'day', true));
+        $this->assertTrue(Str::doesntStartWith('jason', ['day'], true));
+        $this->assertTrue(Str::doesntStartWith('jason', '', true));
+        $this->assertTrue(Str::doesntStartWith('jason', 'J', false));
+    }
+
+    public function testDoesntEndWithIgnoreCase()
+    {
+        $this->assertFalse(Str::doesntEndWith('jason', 'ON', true));
+        $this->assertFalse(Str::doesntEndWith('JASON', 'on', true));
+        $this->assertFalse(Str::doesntEndWith('jason', ['NO', 'ON'], true));
+        $this->assertTrue(Str::doesntEndWith('jason', 'no', true));
+        $this->assertTrue(Str::doesntEndWith('jason', ['no'], true));
+        $this->assertTrue(Str::doesntEndWith('jason', '', true));
+        $this->assertTrue(Str::doesntEndWith('jason', 'N', false));
+    }
+
     public function testStrExcerpt()
     {
         $this->assertSame('...is a beautiful morn...', Str::excerpt('This is a beautiful morning', 'beautiful', ['radius' => 5]));

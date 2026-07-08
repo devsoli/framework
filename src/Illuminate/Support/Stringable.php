@@ -283,22 +283,24 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      * Determine if a given string ends with a given substring.
      *
      * @param  string|iterable<string>  $needles
+     * @param  bool  $ignoreCase
      * @return bool
      */
-    public function endsWith($needles)
+    public function endsWith($needles, $ignoreCase = false)
     {
-        return Str::endsWith($this->value, $needles);
+        return Str::endsWith($this->value, $needles, $ignoreCase);
     }
 
     /**
      * Determine if a given string doesn't end with a given substring.
      *
      * @param  string|iterable<string>  $needles
+     * @param  bool  $ignoreCase
      * @return bool
      */
-    public function doesntEndWith($needles)
+    public function doesntEndWith($needles, $ignoreCase = false)
     {
-        return Str::doesntEndWith($this->value, $needles);
+        return Str::doesntEndWith($this->value, $needles, $ignoreCase);
     }
 
     /**
@@ -973,22 +975,24 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      * Determine if a given string starts with a given substring.
      *
      * @param  string|iterable<string>  $needles
+     * @param  bool  $ignoreCase
      * @return bool
      */
-    public function startsWith($needles)
+    public function startsWith($needles, $ignoreCase = false)
     {
-        return Str::startsWith($this->value, $needles);
+        return Str::startsWith($this->value, $needles, $ignoreCase);
     }
 
     /**
      * Determine if a given string doesn't start with a given substring.
      *
      * @param  string|iterable<string>  $needles
+     * @param  bool  $ignoreCase
      * @return bool
      */
-    public function doesntStartWith($needles)
+    public function doesntStartWith($needles, $ignoreCase = false)
     {
-        return Str::doesntStartWith($this->value, $needles);
+        return Str::doesntStartWith($this->value, $needles, $ignoreCase);
     }
 
     /**

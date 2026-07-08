@@ -762,6 +762,52 @@ class SupportStringableTest extends TestCase
         $this->assertTrue($this->stringable('Malmö')->doesntEndWith('mo'));
     }
 
+    public function testStartsWithIgnoreCase()
+    {
+        $this->assertTrue($this->stringable('jason')->startsWith('JAS', true));
+        $this->assertTrue($this->stringable('JASON')->startsWith('jas', true));
+        $this->assertTrue($this->stringable('jason')->startsWith(['DAY', 'JAS'], true));
+        $this->assertTrue($this->stringable('jason')->startsWith(collect(['DAY', 'JAS']), true));
+        $this->assertFalse($this->stringable('jason')->startsWith('day', true));
+        $this->assertFalse($this->stringable('jason')->startsWith(['day'], true));
+        $this->assertFalse($this->stringable('jason')->startsWith('', true));
+        $this->assertFalse($this->stringable('jason')->startsWith('J', false));
+    }
+
+    public function testEndsWithIgnoreCase()
+    {
+        $this->assertTrue($this->stringable('jason')->endsWith('ON', true));
+        $this->assertTrue($this->stringable('JASON')->endsWith('on', true));
+        $this->assertTrue($this->stringable('jason')->endsWith(['NO', 'ON'], true));
+        $this->assertTrue($this->stringable('jason')->endsWith(collect(['NO', 'ON']), true));
+        $this->assertFalse($this->stringable('jason')->endsWith('no', true));
+        $this->assertFalse($this->stringable('jason')->endsWith(['no'], true));
+        $this->assertFalse($this->stringable('jason')->endsWith('', true));
+        $this->assertFalse($this->stringable('jason')->endsWith('N', false));
+    }
+
+    public function testDoesntStartWithIgnoreCase()
+    {
+        $this->assertFalse($this->stringable('jason')->doesntStartWith('JAS', true));
+        $this->assertFalse($this->stringable('JASON')->doesntStartWith('jas', true));
+        $this->assertFalse($this->stringable('jason')->doesntStartWith(['DAY', 'JAS'], true));
+        $this->assertTrue($this->stringable('jason')->doesntStartWith('day', true));
+        $this->assertTrue($this->stringable('jason')->doesntStartWith(['day'], true));
+        $this->assertTrue($this->stringable('jason')->doesntStartWith('', true));
+        $this->assertTrue($this->stringable('jason')->doesntStartWith('J', false));
+    }
+
+    public function testDoesntEndWithIgnoreCase()
+    {
+        $this->assertFalse($this->stringable('jason')->doesntEndWith('ON', true));
+        $this->assertFalse($this->stringable('JASON')->doesntEndWith('on', true));
+        $this->assertFalse($this->stringable('jason')->doesntEndWith(['NO', 'ON'], true));
+        $this->assertTrue($this->stringable('jason')->doesntEndWith('no', true));
+        $this->assertTrue($this->stringable('jason')->doesntEndWith(['no'], true));
+        $this->assertTrue($this->stringable('jason')->doesntEndWith('', true));
+        $this->assertTrue($this->stringable('jason')->doesntEndWith('N', false));
+    }
+
     public function testExcerpt()
     {
         $this->assertSame('...is a beautiful morn...', (string) $this->stringable('This is a beautiful morning')->excerpt('beautiful', ['radius' => 5]));
